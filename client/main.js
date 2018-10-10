@@ -1,22 +1,27 @@
-import { Template } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
+import {Meteor} from 'meteor/meteor';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {Switch} from 'react-router'
+import './main.html'
+//Components
+import SignUp from './../imports/ui/components/SignUp'
+import Login from './../imports/ui/components/Login'
+import NotFound from './../imports/ui/components/NotFound'
+import LinkComponent from './../imports/ui/components/Link';
 
-import './main.html';
 
-Template.hello.onCreated(function helloOnCreated() {
-  // counter starts at 0
-  this.counter = new ReactiveVar(0);
-});
-
-Template.hello.helpers({
-  counter() {
-    return Template.instance().counter.get();
-  },
-});
-
-Template.hello.events({
-  'click button'(event, instance) {
-    // increment the counter when button is clicked
-    instance.counter.set(instance.counter.get() + 1);
-  },
-});
+//Setup Routes
+const routes = (
+  <Router>
+    <Switch>
+      <Route exact path="/" component={Login}/>
+      <Route path="/signup" component={SignUp}/>
+      <Route path="/links" component={LinkComponent}/>
+      <Route path="*" component={NotFound}/>
+    </Switch>
+  </Router>
+);
+Meteor.startup(()=>{
+  ReactDOM.render(routes, document.getElementById('app'));
+})
