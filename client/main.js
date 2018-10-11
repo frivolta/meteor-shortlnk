@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import {Tracker} from 'meteor/tracker'
 import './main.html'
 import {routes} from '../imports/routes/routes';
+
+import {Links} from '../imports/api/links';
+
 Tracker.autorun(() => {
   const isAuthenticated = !!Meteor.userId();
 });
