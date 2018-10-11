@@ -1,15 +1,33 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router'
+import { Accounts } from 'meteor/accounts-base';
 
 
 
 export default class LinkComponent extends React.Component {
-    handleLogOut = () => {
-        this.props.history.push('/')
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: '',
+            redirectToRef: false
+        }
+    }
+    handleLogOut = (e) => {
+        e.preventDefault();
+        Accounts.logout(()=>{
+            this.setState({
+                ...this.state,
+                redirectToRef:true
+            })
+        });
+        //this.props.history.push('/')
+        //require ('meteor/meteor').Meteor.user()
     }
     render() {
         return (
             <div>
+                {/* Redirect if submit correctly */}
+                {this.state.redirectToRef && <Redirect to='/'/> }
                 <p>Link</p>
                 <button onClick={this.handleLogOut}>LogOut</button>
             </div>
