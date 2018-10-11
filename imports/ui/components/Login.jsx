@@ -18,11 +18,18 @@ export default class Login extends React.Component {
     let email = this.refs.email.value.trim();
     let password = this.refs.password.value.trim()
     Meteor.loginWithPassword({email}, password, (err)=>{
-      console.log('Login callback',err);
-      this.setState({
-        ...this.state,
-        redirectToRef:true
-    })
+      if(err){
+        this.setState({
+          ...this.state,
+          error:err.reason
+      })
+      }else{
+        this.setState({
+          ...this.state,
+          error:'',
+          redirectToRef:true
+      })
+      }
     })
     /* e.preventDefault();
      this.setState({
@@ -38,7 +45,7 @@ export default class Login extends React.Component {
         {this.state.redirectToRef && <Redirect to='/links'/> }
         <h1>Login to Short Lnk</h1>
         {this.state.error && <p>{this.state.error}</p>}
-        <form >
+        <form noValidate>
           <input type="email" ref="email" name="email" placeholder="Email" />
           <input type="password" ref="password" name="password" placeholder="Password" />
           <button onClick={this.onSubmit}>Login</button>

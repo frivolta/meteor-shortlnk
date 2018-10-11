@@ -13,17 +13,26 @@ export default class SignUp extends React.Component {
     }
     onSubmit = (e) => {
         e.preventDefault();
+
         let email = this.refs.email.value.trim();
-        let password = this.refs.password.value.trim()
-        console.log(email, password)
+        let password = this.refs.password.value.trim();
+    
+
         Accounts.createUser({ email, password }, (err) => {
-            console.log('Signup callback', err)
-            this.setState({
-                ...this.state,
-                redirectToRef:true
-            })
+            if (err) {
+                this.setState({
+                    ...this.state,
+                    error: err.reason
+                })
+            } else {
+                this.setState({
+                    ...this.state,
+                    error: '',
+                    redirectToRef: true
+                })
+            }
         })
-        
+
         /* e.preventDefault();
          this.setState({
              error: 'Something went wrong'
@@ -33,10 +42,10 @@ export default class SignUp extends React.Component {
         return (
             <div>
                 {/* Redirect if submit correctly */}
-                {this.state.redirectToRef && <Redirect to='/'/> }
+                {this.state.redirectToRef && <Redirect to='/' />}
                 <h1>Join Short Lnk</h1>
                 {this.state.error && <p>{this.state.error}</p>}
-                <form >
+                <form noValidate>
                     <input type="email" ref="email" name="email" placeholder="Email" />
                     <input type="password" ref="password" name="password" placeholder="Password" />
                     <button onClick={this.onSubmit}>Create Account</button>

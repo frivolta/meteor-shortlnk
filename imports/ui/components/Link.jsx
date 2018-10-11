@@ -17,6 +17,7 @@ export default class LinkComponent extends React.Component {
         Accounts.logout(()=>{
             this.setState({
                 ...this.state,
+                error:'',
                 redirectToRef:true
             })
         });
