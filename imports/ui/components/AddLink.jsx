@@ -1,5 +1,7 @@
 import React from 'react';
+
 export default class AddLink extends React.Component {
+    
     onSubmit = (e) => {
         const url = this.refs.url.value.trim();
         if (url) {
@@ -7,13 +9,11 @@ export default class AddLink extends React.Component {
             this.refs.url.value = '';
         }
         e.preventDefault();
-
     }
-    render() {
 
+    render() {
         return (
             <React.Fragment>
-
                 <p>Add Link</p>
                 <form onSubmit={this.onSubmit}>
                     <input type="text" ref="url" placeholder="URL" />

@@ -1,31 +1,17 @@
 import React from 'react';
-import { Redirect } from 'react-router'
-import { Accounts } from 'meteor/accounts-base';
-import { Links } from '../../api/links';
 import LinkList from './LinkList';
-import { Meteor } from 'meteor/meteor';
-import  PrivateHeader  from './PrivateHeader';
+import PrivateHeader from './PrivateHeader';
 import AddLink from './AddLink';
+import LinkListFilter from './LinkListFilter';
 
-
-
-
-export default class LinkComponent extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            error: '',
-            redirectToRef: false
-        }
-    }
-    
-    render() {
+const LinkComponent = () => {
         return (
             <div>
-                <PrivateHeader title="Links"/>
-                <LinkList/>
-                <AddLink/>
+                <PrivateHeader title="Links" />
+                <LinkListFilter/>
+                <LinkList />
+                <AddLink />
             </div>
         )
-    }
 }
+export default LinkComponent
