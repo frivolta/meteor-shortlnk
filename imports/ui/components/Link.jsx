@@ -3,6 +3,9 @@ import { Redirect } from 'react-router'
 import { Accounts } from 'meteor/accounts-base';
 import { Links } from '../../api/links';
 import LinkList from './LinkList';
+import { Meteor } from 'meteor/meteor';
+import  PrivateHeader  from './PrivateHeader';
+import AddLink from './AddLink';
 
 
 
@@ -15,40 +18,13 @@ export default class LinkComponent extends React.Component {
             redirectToRef: false
         }
     }
-    onSubmit=(e)=>{
-        const url = this.refs.url.value.trim();
-        if(url){
-            Links.insert({url})
-            this.refs.url.value = '';
-        }
-        e.preventDefault();
-
-    }
-    handleLogOut = (e) => {
-        e.preventDefault();
-        Accounts.logout(()=>{
-            this.setState({
-                ...this.state,
-                error:'',
-                redirectToRef:true
-            })
-        });
-        //this.props.history.push('/')
-        //require ('meteor/meteor').Meteor.user()
-    }
+    
     render() {
         return (
             <div>
-                {/* Redirect if submit correctly */}
-                {this.state.redirectToRef && <Redirect to='/'/> }
-                <p>Link</p>
-                <button onClick={this.handleLogOut}>LogOut</button>
+                <PrivateHeader title="Links"/>
                 <LinkList/>
-                <p>Add Link</p>
-                <form onSubmit={this.onSubmit}>
-                    <input type="text" ref="url" placeholder="URL"/>
-                    <button>Add Link</button>
-                </form>
+                <AddLink/>
             </div>
         )
     }
